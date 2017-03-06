@@ -10,16 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
 import com.test.bean.Admin;
 import com.test.bl.AdminLogic;
 
  
  
 public class AdminController extends HttpServlet {
-	private static Logger logger=Logger.getLogger(AdminController.class);
 	private static final long serialVersionUID = 1L;
 	private Admin admin=null;
  
@@ -36,23 +32,17 @@ public class AdminController extends HttpServlet {
 				{	admin=new Admin(user, pass); 
 					session.setAttribute("admin",admin);
 			        session.setAttribute("username",user); //use this attribute to display data
-			        BasicConfigurator.configure();
-					logger.info("Sign in working!!");
 			        response.sendRedirect("./Admin/adminPreloader.jsp");
 				}
 				else
 				{
 					session.setAttribute("message","Invalid Credentials");
 					session.setAttribute("message1","Hey Admin,We Don't Expect This From You.");
-					BasicConfigurator.configure();
-					logger.info("Sign in not working!!");
 					response.sendRedirect("./lost.jsp");
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				 session.setAttribute("message","Server Down.");
 					session.setAttribute("message1","Please Contact The Administrator.");
-					BasicConfigurator.configure();
-					logger.info("Sign in not working!!");
 					response.sendRedirect("./lost.jsp");
 			}
 		} 
@@ -68,16 +58,12 @@ public class AdminController extends HttpServlet {
 				{
 					session.setAttribute("message","Your Credentials Have Been Updated");
 					session.setAttribute("message1","Please Login In Again!!");
-					BasicConfigurator.configure();
-			 	    logger.info("Admin password update working!!");
 					response.sendRedirect("./lost.jsp");
 				}
 				else
 				{
 					session.setAttribute("message","");
 					session.setAttribute("message1","");
-					BasicConfigurator.configure();
-			 	    logger.info("Admin password update not done!!");
 					response.sendRedirect("./lost.jsp");
 				}
 				
@@ -85,8 +71,6 @@ public class AdminController extends HttpServlet {
 		  
 				 session.setAttribute("message","Server Down.");
 					session.setAttribute("message1","Please Contact The Administrator.");
-					BasicConfigurator.configure();
-			 	    logger.info("Admin password update not working!!");
 					response.sendRedirect("./lost.jsp");
 			}
 		}

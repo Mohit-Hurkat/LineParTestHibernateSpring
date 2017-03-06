@@ -28,51 +28,50 @@ public class TestResult extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		String username = (String) session.getAttribute("sessionUsername");		
+		String username = (String) session.getAttribute("sessionUsername");
 		ArrayList<Question> ques = (ArrayList<Question>) session.getAttribute("Questions");
 		List<PrintResult> resultList1 = new ArrayList<>();
 		try {
-			if(lc.giveTest(username, ques.get(0).getSubjectId()).equals(resultList1)){
-		List<PrintResult> resultList = new ArrayList<>();
-					int count = 0;
-		Question questtt = null;
-			Enumeration<String> questions = request.getParameterNames();
-			while (questions.hasMoreElements()) {
-				String question = questions.nextElement();
-				int questionId = Integer.parseInt(question);
-				questtt = qLogic.search(questionId);
-				String ans = questtt.getAns();
-				System.out.println(ans + " = " + request.getParameter(question));
-				System.out.println(request.getParameter(question));
-				PrintResult rest = new PrintResult(username, questtt.getSubjectId(), questionId, questtt.getQuestion(),
-						questtt.getAns(), request.getParameter(question));
-				resultList.add(rest);
-				if (request.getParameter(question).equals(ans)) {
-					count++;
+			if (lc.giveTest(username, ques.get(0).getSubjectId()).equals(resultList1)) {
+				List<PrintResult> resultList = new ArrayList<>();
+				int count = 0;
+				Question questtt = null;
+				Enumeration<String> questions = request.getParameterNames();
+				while (questions.hasMoreElements()) {
+					String question = questions.nextElement();
+					int questionId = Integer.parseInt(question);
+					questtt = qLogic.search(questionId);
+					String ans = questtt.getAns();
+					System.out.println(ans + " = " + request.getParameter(question));
+					System.out.println(request.getParameter(question));
+					PrintResult rest = new PrintResult(username, questtt.getSubjectId(), questionId,
+							questtt.getQuestion(), questtt.getAns(), request.getParameter(question));
+					resultList.add(rest);
+					if (request.getParameter(question).equals(ans)) {
+						count++;
+					}
+					System.out.println(count);
 				}
-				System.out.println(count);
-			}
-			String Coun = Integer.toString(count * 10).concat(" %");
-			session.setAttribute("sessionResultSet", resultList);
-			session.setAttribute("sessionResult", count);
-			session.setAttribute("message", "You Scored");
-			session.setAttribute("message1", Coun);
-			Question questt = ques.get(0);
-			int subId = questt.getSubjectId();
-			System.out.println(subId);
-			rLogic.set(username, subId, count * 10);
-			if (session.getAttribute("dontGive")==null)
-				response.sendRedirect("./Student/printResult.jsp");
-			else {
-				response.sendRedirect("./Student/printBack.jsp");
-			}
-		} 
-			else{
-				session.setAttribute("message","Test Already Given");
-				session.setAttribute("message1","Stop Using The Browser Back Button");
+				String Coun = Integer.toString(count * 10).concat(" %");
+				session.setAttribute("sessionResultSet", resultList);
+				session.setAttribute("sessionResult", count);
+				session.setAttribute("message", "You Scored");
+				session.setAttribute("message1", Coun);
+				Question questt = ques.get(0);
+				int subId = questt.getSubjectId();
+				System.out.println(subId);
+				rLogic.set(username, subId, count * 10);
+				if (session.getAttribute("dontGive") == null)
+					response.sendRedirect("./Student/printResult.jsp");
+				else {
+					response.sendRedirect("./Student/printBack.jsp");
+				}
+			} else {
+				session.setAttribute("message", "Test Already Given");
+				session.setAttribute("message1", "Stop Using The Browser Back Button");
 				response.sendRedirect("./lost.jsp");
 			}
-		}	catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
