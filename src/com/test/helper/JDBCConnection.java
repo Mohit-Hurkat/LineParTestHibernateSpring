@@ -8,7 +8,7 @@ public class JDBCConnection {
 	public static Connection getConnection() throws ClassNotFoundException, SQLException{
 		Connection connection;
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		connection = DriverManager.getConnection("jdbc:oracle:thin:@delbahamas38794.local:1521","system","sapient@123");
+		connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521","system","sapient@123");
 		return connection;
 	}
 }

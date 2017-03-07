@@ -16,6 +16,7 @@ public class signInController extends HttpServlet {
 		String user = request.getParameter("username");
 		String pass = request.getParameter("password");
 		String login = request.getParameter("login");
+		System.out.println("hola");
 		String admin = "admin";
 		if (user.equals(admin)) {
 			request.setAttribute("username", user);
