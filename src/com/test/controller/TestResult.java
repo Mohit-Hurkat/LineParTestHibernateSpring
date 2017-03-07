@@ -3,9 +3,12 @@ package com.test.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.rmi.CORBA.UtilDelegate;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.test.bean.Question;
+import com.test.bean.Result;
 import com.test.bean.Student;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 import com.test.bean.PrintResult;
 import com.test.bl.QuestionLogic;
 import com.test.bl.ResultLogic;
@@ -32,7 +37,7 @@ public class TestResult extends HttpServlet {
 		ArrayList<Question> ques = (ArrayList<Question>) session.getAttribute("Questions");
 		List<PrintResult> resultList1 = new ArrayList<>();
 		try {
-			if (lc.giveTest(username, ques.get(0).getSubjectId()).equals(resultList1)) {
+			if (lc.giveTest(username, ques.get(0).getSubject_Id()).equals(resultList1)) {
 				List<PrintResult> resultList = new ArrayList<>();
 				int count = 0;
 				Question questtt = null;
@@ -44,7 +49,7 @@ public class TestResult extends HttpServlet {
 					String ans = questtt.getAns();
 					System.out.println(ans + " = " + request.getParameter(question));
 					System.out.println(request.getParameter(question));
-					PrintResult rest = new PrintResult(username, questtt.getSubjectId(), questionId,
+					PrintResult rest = new PrintResult(username, questtt.getSubject_Id(), questionId,
 							questtt.getQuestion(), questtt.getAns(), request.getParameter(question));
 					resultList.add(rest);
 					if (request.getParameter(question).equals(ans)) {
@@ -58,9 +63,12 @@ public class TestResult extends HttpServlet {
 				session.setAttribute("message", "You Scored");
 				session.setAttribute("message1", Coun);
 				Question questt = ques.get(0);
-				int subId = questt.getSubjectId();
+				int subId = questt.getSubject_Id();
 				System.out.println(subId);
-				rLogic.set(username, subId, count * 10);
+				Calendar currenttime = Calendar.getInstance();
+			    Date sqldate = new Date((currenttime.getTime()).getTime());
+				Result result=new Result(username, subId, count * 10,sqldate);
+				rLogic.set(result);
 				if (session.getAttribute("dontGive") == null)
 					response.sendRedirect("./Student/printResult.jsp");
 				else {

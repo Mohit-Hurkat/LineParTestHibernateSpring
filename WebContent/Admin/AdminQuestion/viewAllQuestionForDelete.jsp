@@ -32,7 +32,7 @@ int subject=(Integer)(session.getAttribute("sessionSubjectId"));%>
 				</tr>
 				<%for (Question sub:subList){%>
 				<tr>
-					<td><%=sub.getQuestionId()%></td>
+					<td><%=sub.getQuestion_Id()%></td>
 					<td><%=sub.getQuestion()%></td> 
 				</tr>
 				<% } %>

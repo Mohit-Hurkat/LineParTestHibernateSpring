@@ -1,15 +1,18 @@
 package com.test.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name="Admin")
-public class Admin{
+@Entity(name="ADMIN")
+public class Admin implements Serializable {
 	@Id
 	private String username;
 	private String password;
 
-	public Admin() {
+	public Admin(){
+		
 	}
 	
 	public Admin(String username, String password) {

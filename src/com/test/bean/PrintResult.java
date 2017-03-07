@@ -2,6 +2,8 @@ package com.test.bean;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 public class PrintResult {
 	private String username;
     private int subjectId;

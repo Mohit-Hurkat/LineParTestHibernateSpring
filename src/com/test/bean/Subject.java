@@ -1,6 +1,8 @@
 package com.test.bean;
 
-public class Subject {
+import java.io.Serializable;
+
+public class Subject implements Serializable  {
 	private int subjectId;
 	private String subject;
 	private String start;

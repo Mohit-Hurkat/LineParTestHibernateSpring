@@ -22,10 +22,10 @@
  <div>
  <form action="${pageContext.request.contextPath}/QuestionController">
   <% Question quest=(Question)session.getAttribute("sessionQuestion"); %>
-  You requested to Update Question Id : <%=quest.getQuestionId() %>
+  You requested to Update Question Id : <%=quest.getQuestion_Id() %>
  <br>
-<input type="hidden" name="questionId" value="<%=quest.getQuestionId()%>">
- Subject ID<input type="text" name="subject" value="<%=quest.getSubjectId()%>" >
+<input type="hidden" name="questionId" value="<%=quest.getQuestion_Id()%>">
+ Subject ID<input type="text" name="subject" value="<%=quest.getSubject_Id()%>" >
  Question<input type="text" name="question" value="<%=quest.getQuestion()%>"><br>
  Option 1 <input type="text" name="op1" value="<%=quest.getChoice1()%>">
  Option 2 <input type="text" name="op2" value="<%=quest.getChoice2()%>">

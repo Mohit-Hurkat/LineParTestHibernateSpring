@@ -39,9 +39,9 @@ public class QuestionController extends HttpServlet {
 				session.setAttribute("call", "insertIntoTable");
 				response.sendRedirect("./Admin/AdminQuestion/insertQuestion.jsp");
 			} catch (ClassNotFoundException | SQLException e) {
-				session.setAttribute("message", "Server Error!!!");
+				session.setAttribute("message",e);
 				session.setAttribute("message1", "Please Contact The Administrator.");
-				response.sendRedirect("./lost.jsp");
+				response.sendRedirect("../lost.jsp");
 			}
 		} else if (session.getAttribute("call").equals("insertIntoTable")) {
 			int subjectId = Integer.parseInt(request.getParameter("subject")); // subject
@@ -55,7 +55,7 @@ public class QuestionController extends HttpServlet {
 			String op3 = request.getParameter("op3");
 			String op4 = request.getParameter("op4");
 			int answer = Integer.parseInt(request.getParameter("answer"));
-			Question ques = new Question(questionId, subjectId, question, answer, op1, op2, op3, op4, op1);
+			Question ques = new Question(questionId,subjectId, question, answer, op1, op2, op3, op4, op1, op1);
 			try {
 				if (qLogic.insert(ques)) {
 					session.setAttribute("message", "Inserted Successfully");
@@ -150,11 +150,12 @@ public class QuestionController extends HttpServlet {
 		}
 
 		else if (session.getAttribute("call").equals("updateQues")) {
-			int subjectId = (Integer) session.getAttribute("sessionSubjectId"); // subject
+			int subjectId = (Integer)session.getAttribute("sessionSubjectId"); // subject
 																				// is
 																				// subjectId
 			int questionId = Integer.parseInt(request.getParameter("questionId"));
 			try {
+				System.out.println(questionId);
 				Question qu = qLogic.search(questionId);
 				String question = qu.getQuestion();
 				String op1 = qu.getChoice1();
@@ -162,11 +163,12 @@ public class QuestionController extends HttpServlet {
 				String op3 = qu.getChoice3();
 				String op4 = qu.getChoice4();
 				int answer = qu.getAnswer();
-				Question ques = new Question(questionId, subjectId, question, answer, op1, op2, op3, op4, op1);
+				Question ques = new Question(questionId,subjectId, question, answer, op1, op2, op3, op4, op1, op1);
 				session.setAttribute("sessionQuestion", ques);
 				session.setAttribute("call", "finalQues");
 				response.sendRedirect("./Admin/AdminQuestion/finalUpdate.jsp");
 			} catch (Exception e) {
+				System.out.println(e);
 				session.setAttribute("message", "Update Unsuccessful");
 				session.setAttribute("message1", "Please Contact The Administrator.");
 				response.sendRedirect("./lost.jsp");
@@ -183,7 +185,7 @@ public class QuestionController extends HttpServlet {
 			String op3 = request.getParameter("op3");
 			String op4 = request.getParameter("op4");
 			int answer = Integer.parseInt(request.getParameter("answer"));
-			Question ques = new Question(questionId, subjectId, question, answer, op1, op2, op3, op4, op1);
+			Question ques = new Question(questionId,subjectId, question, answer, op1, op2, op3, op4, op1, op1);
 			try {
 				if (qLogic.update(questionId, ques)) {
 					session.setAttribute("sessionQuestionAll", ques);

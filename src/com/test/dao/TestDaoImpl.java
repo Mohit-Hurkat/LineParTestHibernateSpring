@@ -10,6 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
+
 import java.io.IOException;
 import java.sql.Connection;
 import com.test.bean.Question;
@@ -20,6 +25,16 @@ import com.test.helper.JDBCConnection;
 import com.test.helper.StudentData;
 
 public class TestDaoImpl implements TestDao {
+	private Configuration cfg;
+	private SessionFactory factory;
+	private Session session ;
+	public TestDaoImpl(){
+		cfg = new AnnotationConfiguration();
+		cfg.configure("hibernate.cfg.xml");
+		factory = cfg.buildSessionFactory();
+
+	}
+	
 	private static final String Set_Value="update QUESTIONS SET VALUE = 0 WHERE VALUE= ?";
 	private static final String Call_Question="select * FROM ( "+
 			"select * FROM QUESTIONS ORDER BY DBMS_RANDOM.RANDOM)"+
@@ -254,7 +269,7 @@ public class TestDaoImpl implements TestDao {
 				String choice4=rs.getString(l);
 				int answer=rs.getInt("ANSWER");
 				String ans=rs.getString("ANS");
-				Question que=new Question(questionId, subjectId, question, answer, choice1, choice2, choice3, choice4, ans);
+				Question que=new Question(questionId,subjectId, question, answer, choice1, choice2, choice3, choice4, ans,ans);
 				quesList.add(que);
 				preparedStatement2.setString(1,username);
 				preparedStatement2.setInt(2,questionId);

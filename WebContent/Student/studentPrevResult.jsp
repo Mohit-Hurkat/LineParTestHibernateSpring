@@ -39,10 +39,10 @@ text-align: center;
 	</tr>
 	<%for (Result res:resList){%>
 		<tr>
-			<td><%=res.getUsername() %></td>
-			<td><%=res.getSubject() %></td>
+			<td><%=res.getUsername()%></td>
+			<td><%=res.getSubject()%></td>
 			<td><%=res.getResult() %></td>
-			<td><%=res.getDate() %></td>
+			<td><%=res.getDate1() %></td>
 		</tr>
 	<% } %>
 </table>

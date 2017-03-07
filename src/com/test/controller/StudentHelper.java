@@ -22,7 +22,6 @@ import com.test.bl.ResultLogic;
 import com.test.bl.StudentLogic;
 import com.test.bl.SubjectLogic;
 import com.test.bl.TestLogic;
-import com.test.bean.User;
 
 import javafx.scene.control.Alert;
 
@@ -147,7 +146,8 @@ public class StudentHelper extends HttpServlet {
 					student = lc.search(user);
 					session.setAttribute("sessionName", student.getName());
 					session.setAttribute("sessionUsername", user);
-					response.sendRedirect("./Student/studentPreloader.jsp");
+//					response.sendRedirect("./Student/studentPreloader.jsp");
+					response.sendRedirect("./Student/student.jsp");
 				} else {
 					session.setAttribute("message", "Invalid Credentials");
 					session.setAttribute("message1", "Visit lenskart for better vision.");
@@ -172,6 +172,7 @@ public class StudentHelper extends HttpServlet {
 			String username = (String) session.getAttribute("sessionUsername");
 			try {
 				List<Result> result1 = rc.show(username);
+				System.out.println(result1);
 				List<Question> result2 = new ArrayList<>();
 				if (!result1.equals(result2)) {
 					session.setAttribute("testResult", result1);// use this

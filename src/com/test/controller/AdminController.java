@@ -32,7 +32,8 @@ public class AdminController extends HttpServlet {
 				{	admin=new Admin(user, pass); 
 					session.setAttribute("admin",admin);
 			        session.setAttribute("username",user); //use this attribute to display data
-			        response.sendRedirect("./Admin/adminPreloader.jsp");
+//			        response.sendRedirect("./Admin/adminPreloader.jsp");
+			        response.sendRedirect("./Admin/adminSignIn.jsp");
 				}
 				else
 				{

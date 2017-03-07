@@ -34,7 +34,7 @@ public class QuestionData {
 			choice4=scanner.nextLine();
 			System.out.println("Enter Answer Of The Question(Numeric Option):");
 			answer=scanner.nextInt();
-			question=new Question(0,subjectId, question1, answer, choice1, choice2, choice3, choice4,ans);
+			question=new Question(QuestionId,subjectId, question1, answer, choice1, choice2, choice3, choice4,ans,ans);
 			 return question;
 		} catch (NumberFormatException e) {
 			System.out.println("Enter Appropriate Information");
@@ -62,7 +62,7 @@ public class QuestionData {
 			choice4=scanner.nextLine();
 			System.out.println("Enter Answer Of The Question:");
 			answer=scanner.nextInt();
-			 question=new Question(QuestionId,subjectId, question1, answer, choice1, choice2, choice3, choice4,ans);
+			 question=new Question(QuestionId,subjectId, question1, answer, choice1, choice2, choice3, choice4,ans,ans);
 			 return question;
 		} catch (Exception e) {
 			System.out.println("Enter Appropriate Information");

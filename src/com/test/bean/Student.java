@@ -1,21 +1,28 @@
 package com.test.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="Student")
-public class Student{
+@Entity(name="STUDENT")
+public class Student implements Serializable {
     @Id
-	private String username;
-	private String password;
-	private String name;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private String username;
+    private String password;
+    private String name;
     private String phone;
     private String email;
 
-    public Student(){
-    	
-    }
 	
+ 	public Student(){
+		
+ 	}
+ 	
+     
 	public Student(String username, String password, String name, String phone, String email) {
 		super();
 		this.username = username;
@@ -24,6 +31,7 @@ public class Student{
 		this.phone = phone;
 		this.email = email;
 	}
+
 
 	public String getUsername() {
 		return username;

@@ -42,9 +42,9 @@
 	</tr>
 <%for (Question ques:questionList){%>
 		<tr>
-		<td><%=ques.getQuestionId()%></td>
+		<td><%=ques.getQuestion_Id()%></td>
 			<td><%=ques.getQuestion()%></td>
-			<td><input type="radio" name="questionId" value="<%=ques.getQuestionId()%>"></td>
+			<td><input type="radio" name="questionId" value="<%=ques.getQuestion_Id()%>"></td>
 		</tr>
 	<% } %>
 	</table>

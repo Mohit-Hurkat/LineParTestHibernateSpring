@@ -24,7 +24,10 @@ public class AdminQuestionController extends HttpServlet {
 		HttpSession session=request.getSession(false);
 			SubjectLogic lc=new SubjectLogic();
 			try {
+				System.out.println("hello");
 				List<Subject> sub=lc.displayAll();
+				System.out.println("hel");
+				System.out.println(sub);
 				if(sub!=null)
 				{
 					if (request.getParameter("delete") != null) {
@@ -46,12 +49,13 @@ public class AdminQuestionController extends HttpServlet {
 				{
 					session.setAttribute("message","");
 					session.setAttribute("message1","");
-					response.sendRedirect("./lost.jsp");
+					response.sendRedirect("../lost.jsp");
 				}
 			} catch (ClassNotFoundException | SQLException | NullPointerException e) {
-				session.setAttribute("message","Server Down!!!");
+				System.out.println(e);
+				session.setAttribute("message","hello");
 				session.setAttribute("message1","Please Contact The Administrator.");
-				response.sendRedirect("./lost.jsp");
+				response.sendRedirect("../lost.jsp");
 			}  
 		}
 

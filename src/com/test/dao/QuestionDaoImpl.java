@@ -5,162 +5,159 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
+import org.hibernate.type.IntegerType;
+
 import com.test.bean.Question;
+
 import com.test.helper.JDBCConnection;
 
-public class QuestionDaoImpl implements QuestionDao{
-	private static final String UPDATE_QUERY = "UPDATE QUESTIONS SET SUBJECT_ID = ?, QUESTION = ?," + 
-			"CHOICE1 = ?, CHOICE2 = ?, CHOICE3 = ?, CHOICE4 = ?, ANSWER = ?, VALUE = ?,ANS=? WHERE QUESTION_ID = ?";
-	private static final String DELETE_QUERY = "DELETE FROM QUESTIONS WHERE QUESTION_ID = ?";
-	private static final String SELECT_ALL_QUERY = "SELECT * FROM QUESTIONS WHERE SUBJECT_ID= ?";	
-	private static final String SELECT_QUERY = "SELECT * FROM QUESTIONS WHERE QUESTION_ID = ?";
-    private static final String INSERT_QUERY="INSERT INTO QUESTIONS(QUESTION_ID,SUBJECT_ID,QUESTION,CHOICE1,CHOICE2,CHOICE3,CHOICE4,ANSWER,ANS,VALUE) VALUES(?,?,?,?,?,?,?,?,?,0)";
-    private static final String GET_MAX_ID_QUERY = "SELECT COALESCE(MAX(QUESTION_ID), 0) AS COUNT FROM QUESTIONS";
-    private static final String GET_ANS = "SELECT ANS FROM QUESTIONS WHERE QUESTION_ID = ?";
-    private int question_id;
-    private int subject_id;
-    private String question_1;
-    private String choice_1;
-    private String choice_2;
-    private String choice_3;
-    private String choice_4;
-    private int ans2;
-    private String ans1;
-    
-    @Override
-	public boolean insert(Question question) throws IOException, ClassNotFoundException, SQLException{
-		int numAffectedRows=0;
-		Connection connection = JDBCConnection.getConnection();
-		int questionId = this.getMaxId() + 1;
-		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY);
-		preparedStatement.setInt(1, questionId);
-		preparedStatement.setInt(2, question.getSubjectId());
-		preparedStatement.setString(3, question.getQuestion());
-		preparedStatement.setString(4, question.getChoice1());
-		preparedStatement.setString(5, question.getChoice2());
-		preparedStatement.setString(6, question.getChoice3());
-		preparedStatement.setString(7, question.getChoice4());
-		preparedStatement.setInt(8, question.getAnswer());
-		preparedStatement.setString(9, question.getAns());
-		numAffectedRows = preparedStatement.executeUpdate();
-		preparedStatement.close();
-		connection.close();
-		return numAffectedRows > 0;
+public class QuestionDaoImpl implements QuestionDao {
+	private Configuration cfg;
+	private SessionFactory factory;
+	private Session session;
+
+	public QuestionDaoImpl() {
+		cfg = new AnnotationConfiguration();
+		cfg.configure("hibernate.cfg.xml");
+		factory = cfg.buildSessionFactory();
+
 	}
-    
-    
-    @Override
-	public Question search(int questionId)throws IOException,ClassNotFoundException, SQLException {
-		Question question = null;
-		List<Question> questionList = new ArrayList<>();
-		Connection connection = JDBCConnection.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY);
-		preparedStatement.setInt(1, questionId);
-		ResultSet rs = preparedStatement.executeQuery();
-		if(rs.next()){
-			subject_id = rs.getInt("SUBJECT_ID");
-			question_1 = rs.getString("QUESTION");
-			choice_1= rs.getString("CHOICE1");
-			choice_2= rs.getString("CHOICE2");
-			choice_3= rs.getString("CHOICE3");
-			choice_4= rs.getString("CHOICE4");
-			ans2 = rs.getInt("ANSWER");
-			ans1=rs.getString("ANS");
-			question = new Question(questionId, subject_id, question_1, ans2, choice_1, choice_2, choice_3, choice_4,ans1);
-			questionList.add(question);
+
+	private static final String GET_ANS = "SELECT ANS FROM QUESTIONS WHERE QUESTION_ID = ?";
+	private Question ques = null;
+
+	@Override
+	public boolean insert(Question question) throws IOException, ClassNotFoundException, SQLException {
+		session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Query query = session.createSQLQuery("SELECT MAX(QUESTION_ID) as value FROM QUESTIONS").addScalar("value", new IntegerType());
+			int quesId = (int) query.uniqueResult();
+			question.setQuestion_Id(quesId+1);
+			session.save(question);
+			tx.commit();
+			return true;
+
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();
 		}
-		rs.close();
-		preparedStatement.close();
-		connection.close();
-		return question;
+		return false;
 	}
-    
-    @Override
-	public List<Question> displayAll(int subjectId) throws IOException,ClassNotFoundException, SQLException{
-    	Question question = null;
-    	List<Question> questionList = new ArrayList<>();
-		Connection connection = JDBCConnection.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_QUERY);
-		preparedStatement.setInt(1, subjectId);
-		ResultSet rs = preparedStatement.executeQuery();
-		while(rs.next()){
-			question_id = rs.getInt("QUESTION_ID");
-			question_1 = rs.getString("QUESTION");
-			choice_1= rs.getString("CHOICE1");
-			choice_2= rs.getString("CHOICE2");
-			choice_3= rs.getString("CHOICE3");
-			choice_4= rs.getString("CHOICE4");
-			ans2 = rs.getInt("ANSWER");
-			ans1=rs.getString("ANS");
-			question = new Question(question_id, subjectId, question_1, ans2, choice_1, choice_2, choice_3, choice_4,ans1);
-			questionList.add(question);
+
+	@Override
+	public Question search(int questionId) throws IOException, ClassNotFoundException, SQLException {
+		session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			ques = (Question) session.get(Question.class, questionId);
+			tx.commit();
+			return ques;
+
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();
 		}
-		rs.close();
-		preparedStatement.close();
-		connection.close();
-		return questionList;
+		return null;
 	}
-    
-    @Override
-	public boolean update(int questionId, Question question)throws IOException, ClassNotFoundException, SQLException {
-		Connection connection = JDBCConnection.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
-		preparedStatement.setInt(1, question.getSubjectId());
-		preparedStatement.setString(2, question.getQuestion());
-		preparedStatement.setString(3, question.getChoice1());
-		preparedStatement.setString(4, question.getChoice2());
-		preparedStatement.setString(5, question.getChoice3());
-		preparedStatement.setString(6, question.getChoice4());
-		preparedStatement.setInt(7, question.getAnswer());
-		preparedStatement.setInt(8,0);
-		preparedStatement.setString(9, question.getAns());
-		preparedStatement.setInt(10, questionId);
-		preparedStatement.executeQuery();
-		preparedStatement.close();
-		connection.close();
-		return true;
+
+	@Override
+	public List<Question> displayAll(int subjectId) throws IOException, ClassNotFoundException, SQLException {
+		session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from QUESTIONS WHERE SUBJECT_ID=:subjectId");
+			query.setInteger("subjectId", subjectId);
+			List<Question> quesList = query.list();
+			tx.commit();
+			return quesList;
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
 	}
-    
-    @Override
-	public boolean delete(int questionID) throws IOException, ClassNotFoundException, SQLException {
-		int updateCount;
-		Connection connection = JDBCConnection.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY);
-		preparedStatement.setInt(1, questionID);
-		preparedStatement.execute();
-		updateCount = preparedStatement.getUpdateCount();
-		preparedStatement.close();
-		connection.close();
-		return updateCount > 0;
+
+	@Override
+	public boolean update(int questionId, Question question) throws IOException, ClassNotFoundException, SQLException {
+		session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			System.out.println("he");
+			ques = (Question) session.get(Question.class, questionId);
+			ques.setAns(question.getAns());
+			ques.setAnswer(question.getAnswer());
+			ques.setChoice1(question.getChoice1());
+			ques.setChoice2(question.getChoice2());
+			ques.setChoice3(question.getChoice3());
+			ques.setChoice4(question.getChoice4());
+			ques.setQuestion(question.getQuestion());
+			ques.setQuestion_Id(questionId);
+			ques.setSubject_Id(question.getSubject_Id());
+			ques.setValue(question.getValue());
+			tx.commit();
+			return true;
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
+		return false;
 	}
-    
-    
-    
-    public int getMaxId() throws SQLException, ClassNotFoundException{
-		Connection connection = JDBCConnection.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(GET_MAX_ID_QUERY);
-		ResultSet rs = preparedStatement.executeQuery();
-		rs.next();
-		int result = rs.getInt("COUNT");
-		rs.close();
-		preparedStatement.close();
-		connection.close();
-		return result;
+
+	@Override
+	public boolean delete(int questionId) throws IOException, ClassNotFoundException, SQLException {
+		session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			ques = (Question) session.get(Question.class, questionId);
+			session.delete(ques);
+			tx.commit();
+			return true;
+
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
+		return false;
 	}
-    
-    public String answer(int questionID) throws IOException, ClassNotFoundException, SQLException {
-    	Connection connection = JDBCConnection.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(GET_ANS);
-		preparedStatement.setInt(1, questionID);
-		ResultSet rs = preparedStatement.executeQuery();
-		rs.next();
-		String ans = rs.getString("ANS");
-		preparedStatement.close();
-		connection.close();
-    	return ans;
-    
-    }
+
+	public String answer(int questionId) throws IOException, ClassNotFoundException, SQLException {
+		
+		session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			ques = (Question) session.get(Question.class, questionId);
+			String ans=ques.getAns();
+			tx.commit();
+			return ans;
+
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
 }
