@@ -117,20 +117,11 @@ public class TestDaoImpl implements TestDao {
 		try {
 			System.out.println("m");
 			tx = session.beginTransaction();
-			Query query = session.createSQLQuery("SELECT * FROM (SELECT * FROM QUESTIONS ORDER BY DBMS_RANDOM.RANDOM)WHERE rownum <=10 AND SUBJECT_ID =:subId AND VALUE !=:value ");
+			Query query = session.createSQLQuery("SELECT * FROM QUESTIONS WHERE rownum <=10 AND SUBJECT_ID =:subId AND VALUE !=:value ORDER BY DBMS_RANDOM.RANDOM");
 			query.setInteger("subId", subjectId);
 			query.setString("value", username);
-			List<Question> quesList = (List<Question>)query.list();
-			System.out.println(quesList + "hell");
-			Iterator itr = quesList.iterator();
-			System.out.println("1");
-			while(itr.hasNext()){
-				System.out.println("2");
-				Question q=(Question) itr.next();
-				System.out.println(q);
-				System.out.println("3");
-				
-			}
+			List<Question> quesList =query.list();
+			System.out.println(quesList);
 			// int id=quesList.get(0).getQuestion_Id();
 			// int id1=quesList.get(1).getQuestion_Id();
 			// System.out.println(id);
