@@ -31,9 +31,6 @@ public class StudentLogic {
 		return studentDao.update(username, newStudent);
 	}
 	
-	public boolean updatePass(String mailId, String password) throws IOException, ClassNotFoundException, SQLException{
-		return studentDao.updatePass(mailId, password);
-	}
 	public boolean check(String username,String password)throws IOException,ClassNotFoundException, SQLException {
 		return studentDao.check(username, password);
 	}

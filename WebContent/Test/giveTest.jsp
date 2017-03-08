@@ -77,31 +77,20 @@ a {
 				for (Question quest : ques) {
 			%>
 			<div class="question">
-				<ol class="mySlides">
 					<h3>
 						QuestionNo:
 						<%=++que%></h3>
 					<h3><%=quest.getQuestion()%></h3>
-					<li><input type="radio" name="<%=quest.getQuestionId()%>"
+					<ol class="mySlides">
+					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
 						value="<%=quest.getChoice1()%>"><%=quest.getChoice1()%></li>
-					<li><input type="radio" name="<%=quest.getQuestionId()%>"
+					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
 						value="<%=quest.getChoice2()%>"><%=quest.getChoice2()%></li>
-					<li><input type="radio" name="<%=quest.getQuestionId()%>"
+					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
 						value="<%=quest.getChoice3()%>"><%=quest.getChoice3()%></li>
-					<li><input type="radio" name="<%=quest.getQuestionId()%>"
+					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
 						value="<%=quest.getChoice4()%>"><%=quest.getChoice4()%></li>
 				</ol>
-
-
-
-
-				<!--  						<div class="leftRight">
-							<a class="left" id="lef" onclick="plusDivs(-1)">&#10094;</a>
-							<div id="timer_div"></div>
- 							<a class="right" id="rig" onclick="plusDivs(1)">&#10095;</a>
- 							<br>
- 							</div>
-				 -->
 			</div>
 			<%
 				}

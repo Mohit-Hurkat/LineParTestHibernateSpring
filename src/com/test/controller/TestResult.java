@@ -37,7 +37,7 @@ public class TestResult extends HttpServlet {
 		ArrayList<Question> ques = (ArrayList<Question>) session.getAttribute("Questions");
 		List<PrintResult> resultList1 = new ArrayList<>();
 		try {
-			if (lc.giveTest(username, ques.get(0).getSubject_Id()).equals(resultList1)) {
+			if (lc.result(username, ques.get(0).getSubject_Id())==0) {
 				List<PrintResult> resultList = new ArrayList<>();
 				int count = 0;
 				Question questtt = null;
@@ -68,6 +68,7 @@ public class TestResult extends HttpServlet {
 				Calendar currenttime = Calendar.getInstance();
 			    Date sqldate = new Date((currenttime.getTime()).getTime());
 				Result result=new Result(username, subId, count * 10,sqldate);
+				System.out.println("hellol"+result);
 				rLogic.set(result);
 				if (session.getAttribute("dontGive") == null)
 					response.sendRedirect("./Student/printResult.jsp");

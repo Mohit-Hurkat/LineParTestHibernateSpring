@@ -143,31 +143,7 @@ public class StudentController extends HttpServlet {
 				e.printStackTrace();
 			}
 
-		} else if (request.getParameter("updatepass") != null) {
-
-			String spass = request.getParameter("spass");
-			String semail = request.getParameter("semail");
-			StudentLogic lc = new StudentLogic();
-			try {
-				if (lc.updatePass(semail, spass)) {
-					request.setAttribute("studentUpdate", "Successfully Updated.");
-					RequestDispatcher dispatch = request.getRequestDispatcher("./student.jsp");
-					dispatch.forward(request, response);
-				} else {
-					request.setAttribute("studentUpdate", "Error.");
-					RequestDispatcher dispatch = request.getRequestDispatcher("./lost.jsp");// change
-																							// this
-																							// to
-																							// appropriate
-																							// path
-					dispatch.forward(request, response);
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
+		} 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

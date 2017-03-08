@@ -1,56 +1,68 @@
 package com.test.bean;
 
 import java.io.Serializable;
+import java.sql.Date;
 
-public class Subject implements Serializable  {
-	private int subjectId;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name = "SUBJECT")
+public class Subject implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	private int subject_Id;
 	private String subject;
-	private String start;
-	private String end; 
-	
-	
-	public Subject(int subjectId, String subject, String start, String end) {
-		super();
-		this.subjectId = subjectId;
-		this.subject = subject;
-		this.start = start;
-		this.end = end;
+	private String start_;
+	private String end_;
+
+	public Subject() {
+
 	}
 
-	public int getSubjectId() {
-		return subjectId;
+	public Subject(int subject_Id, String subject, String start_, String end_) {
+		super();
+		this.subject_Id = subject_Id;
+		this.subject = subject;
+		this.start_ = start_;
+		this.end_ = end_;
 	}
-	public void setSubjectId(int subjectId) {
-		this.subjectId = subjectId;
+
+	public int getSubject_Id() {
+		return subject_Id;
 	}
+
+	public void setSubject_Id(int subject_Id) {
+		this.subject_Id = subject_Id;
+	}
+
 	public String getSubject() {
 		return subject;
 	}
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
-	public String getStart() {
-		return start;
+	public String getStart_() {
+		return start_;
 	}
 
-	public void setStart(String start) {
-		this.start = start;
+	public void setStart_(String start_) {
+		this.start_ = start_;
 	}
 
-	public String getEnd() {
-		return end;
+	public String getEnd_() {
+		return end_;
 	}
 
-	public void setEnd(String end) {
-		this.end = end;
+	public void setEnd_(String end_) {
+		this.end_ = end_;
 	}
 
 	@Override
 	public String toString() {
-		return "SubjectId=" + subjectId + ", subject=" + subject + "\nTest can be given between "+ start + " and " + end + "\n" ;
+		return "SubjectId=" + subject_Id + ", subject=" + subject + "\nTest can be given between " + start_ + " and "
+				+ end_ + "\n";
 	}
-	
-	
-	
+
 }

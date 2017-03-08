@@ -29,6 +29,7 @@
         <mapping class="com.test.bean.Student"/>
         <mapping class="com.test.bean.Question"/>
         <mapping class="com.test.bean.Result"/>
+        <mapping class="com.test.bean.Subject"/>
         
 
 

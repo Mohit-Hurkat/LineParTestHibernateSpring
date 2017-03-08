@@ -7,10 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity(name="STUDENT")
 public class Student implements Serializable {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id
     private String username;
     private String password;
     private String name;

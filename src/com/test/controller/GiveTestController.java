@@ -23,9 +23,11 @@ public class GiveTestController extends HttpServlet {
 		
 		String username=(String)session.getAttribute("sessionUsername");
 		try {
-			int subject=Integer.parseInt(request.getParameter("subjectIdd"));
+			int subjectId=Integer.parseInt(request.getParameter("subjectIdd"));
 			List<Question> quest=new ArrayList<>();
-			quest=lc.getQuestions(username, subject);
+			quest=lc.getQuestions(username, subjectId);
+			System.out.println(quest);
+			System.out.println("n");
 			session.setAttribute("Questions",quest);
 			response.sendRedirect("./Test/giveTest.jsp");
 		} catch (InterruptedException | ClassNotFoundException | SQLException | NullPointerException e) {

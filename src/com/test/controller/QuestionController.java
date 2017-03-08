@@ -46,9 +46,8 @@ public class QuestionController extends HttpServlet {
 		} else if (session.getAttribute("call").equals("insertIntoTable")) {
 			int subjectId = Integer.parseInt(request.getParameter("subject")); // subject
 																				// is
-																				// subjectId
+			int questionId = 0;				// questionId
 			session.setAttribute("sessionSubjectId", subjectId);
-			int questionId = Integer.parseInt(request.getParameter("questionId"));
 			String question = request.getParameter("question");
 			String op1 = request.getParameter("op1");
 			String op2 = request.getParameter("op2");
@@ -210,7 +209,7 @@ public class QuestionController extends HttpServlet {
 			session.setAttribute("sessionSubjectId", subjectId);
 			try {
 				sub = sLogic.search(subjectId);
-				List<Question> ques = qLogic.displayAll(sub.getSubjectId());
+				List<Question> ques = qLogic.displayAll(sub.getSubject_Id());
 				if (ques != null) {
 					session.setAttribute("sessionQuestionAll", ques);// use this
 																		// attribute

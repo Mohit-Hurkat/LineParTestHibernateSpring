@@ -25,7 +25,6 @@ public class Question implements Serializable {
    public Question(){
 	   
    }
-   
 
 public Question(int question_Id,int subject_Id, String question, int answer, String choice1, String choice2,
 		String choice3, String choice4,String ans,String value) {
@@ -51,10 +50,15 @@ public Question(int question_Id,int subject_Id, String question, int answer, Str
 	this.value = value;
 }
 
+
+
 @Override
 public String toString() {
-	return "SubjectId=" + subject_Id +" QuestionId=" + question_Id + "\nQuestion=" + question + ",\nAnswer="+ ans;
+	return "Question [question_Id=" + question_Id + ", subject_Id=" + subject_Id + ", question=" + question
+			+ ", answer=" + answer + ", choice1=" + choice1 + ", choice2=" + choice2 + ", choice3=" + choice3
+			+ ", choice4=" + choice4 + ", ans=" + ans + ", value=" + value + "]";
 }
+
 public String display() {
 	return "Question=" + question + "\n1." + choice1 + "\n2." + choice2 + "\n3." + choice3
 			+ "\n4." + choice4;
@@ -159,8 +163,5 @@ public String getValue() {
 public void setValue(String value) {
 	this.value = value;
 }
-
-
-
    
 }

@@ -29,10 +29,10 @@
 		</tr>
 		<% Subject sub=(Subject)session.getAttribute("subjectSearch"); %>
 		<tr>
-			<td><%=sub.getSubjectId() %></td>
+			<td><%=sub.getSubject_Id() %></td>
 			<td><%=sub.getSubject() %></td>
-			<td><%=sub.getStart()%></td>
-			<td><%=sub.getEnd() %></td>
+			<td><%=sub.getStart_()%></td>
+			<td><%=sub.getEnd_() %></td>
 		 
 		</tr>
 	

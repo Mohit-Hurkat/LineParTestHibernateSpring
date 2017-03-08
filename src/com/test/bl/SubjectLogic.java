@@ -10,8 +10,8 @@ import com.test.dao.SubjectDaoImpl;
 
 public class SubjectLogic {
 	private SubjectDao subjectDao=new SubjectDaoImpl();
-	public boolean insert(String sub,String sub1,String sub2) throws IOException, ClassNotFoundException, SQLException{
-		return subjectDao.insert(sub,sub1,sub2);
+	public boolean insert(Subject subject) throws IOException, ClassNotFoundException, SQLException{
+		return subjectDao.insert(subject);
 	}
 	public Subject search(int subjectId) throws IOException, ClassNotFoundException, SQLException{
 		return subjectDao.search(subjectId);

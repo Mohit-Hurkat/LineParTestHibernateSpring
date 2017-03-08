@@ -29,13 +29,16 @@ public class TestController extends HttpServlet {
 															// parameter name
 				try {
 					List<Result> result = new ArrayList<>();
-					// System.out.println(result);
+					 System.out.println("a");
 					System.out.println(subjectId);
 					System.out.println(username);
 					System.out.println(result);
-					if (lc.giveTest(username, subjectId).equals(result)) {
+					if (lc.result(username, subjectId)==0) {
+						System.out.println("aa");
 						if (lc.check_questions(subjectId, username)) {
+							System.out.println("aaa");
 							if (lc.dateCheck(subjectId)) {
+								System.out.println("aaaa");
 								request.setAttribute("sessionSubjectId", subjectId);
 								RequestDispatcher dispatch = request.getRequestDispatcher("./Test/Rules.jsp");// change
 																												// this
@@ -58,7 +61,8 @@ public class TestController extends HttpServlet {
 						session.setAttribute("message1", "Please Try Again");
 						response.sendRedirect("./lost.jsp");
 					}
-				} catch (ClassNotFoundException | InterruptedException | SQLException e) {
+				} catch (ClassNotFoundException | SQLException e) {
+					System.out.println(e);
 					session.setAttribute("message", "Server Down!!!");
 					session.setAttribute("message1", "Please Contact The Administrator.");
 					response.sendRedirect("./lost.jsp");
@@ -72,106 +76,6 @@ public class TestController extends HttpServlet {
 			session.setAttribute("message", "Please Select A Subject!");
 			session.setAttribute("message1", "Oops");
 			response.sendRedirect("./lost.jsp");
-		}
-
-		if (request.getParameter("result") != null)// check the parameter name
-		{
-			String suname = request.getParameter("suname");
-			int subid = Integer.parseInt(request.getParameter("subid"));
-			try {
-				int res = lc.result(suname, subid);
-				if (res > 0) {
-					request.setAttribute("testResult", res);// use this
-															// attribute to
-															// abstract info
-					RequestDispatcher dispatch = request.getRequestDispatcher("./student.jsp");
-					dispatch.forward(request, response);
-				} else {
-					session.setAttribute("message", "Test Error");
-					session.setAttribute("message1", "");
-					response.sendRedirect("./lost.jsp");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				session.setAttribute("message", "Server Down!!!");
-				session.setAttribute("message1", "Please Contact The Administrator.");
-				response.sendRedirect("./lost.jsp");
-			}
-
-		} else if (request.getParameter("check") != null) {// check the
-															// parameter name
-			int subid = Integer.parseInt(request.getParameter("subid"));
-			try {
-				if (lc.check(subid)) {
-					request.setAttribute("testCheck", "Checked");// use this
-																	// attribute
-																	// to
-																	// abstract
-																	// data and
-																	// use it in
-																	// proper
-																	// place
-					RequestDispatcher dispatch = request.getRequestDispatcher("./student.jsp");
-					dispatch.forward(request, response);
-				} else {
-					session.setAttribute("message", "Test Error");
-					session.setAttribute("message1", "Please Login Again");
-					response.sendRedirect("./lost.jsp");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-
-				e.printStackTrace();
-			}
-
-		} else if (request.getParameter("datecheck") != null) {// check the
-																// parameter
-																// name
-			int subid = Integer.parseInt(request.getParameter("subid"));
-			try {
-
-				if (lc.dateCheck(subid)) {
-					request.setAttribute("testDateCheck", "checked");// use this
-																		// attribute
-																		// to
-																		// display
-																		// data
-					RequestDispatcher dispatch = request.getRequestDispatcher("./student.jsp");
-					dispatch.forward(request, response);
-				} else {
-					session.setAttribute("message", "Test Error");
-					session.setAttribute("message1", "Please Login Again");
-					response.sendRedirect("./lost.jsp");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				session.setAttribute("message", "Server Down!!!");
-				session.setAttribute("message1", "Please Contact The Administrator.");
-				response.sendRedirect("./lost.jsp");
-			}
-
-		} else if (request.getParameter("resultstudent") != null) {// check the
-																	// parameter
-																	// name
-			String suname = request.getParameter("suname");
-			try {
-				if (lc.result_student(suname)) {
-					request.setAttribute("testResult", "Student Result.");// use
-																			// this
-																			// attribute
-																			// to
-																			// display
-																			// data
-					RequestDispatcher dispatch = request.getRequestDispatcher("./student.jsp");
-					dispatch.forward(request, response);
-				} else {
-					session.setAttribute("message", "Error");
-					session.setAttribute("message1", "Please Login Again");
-					response.sendRedirect("./lost.jsp");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				session.setAttribute("message", "Server Down!!!");
-				session.setAttribute("message1", "Please Contact The Administrator.");
-				response.sendRedirect("./lost.jsp");
-			}
-
 		}
 
 	}

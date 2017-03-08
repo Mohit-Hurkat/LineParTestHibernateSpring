@@ -28,7 +28,7 @@
 			</tr>
 			<%for (Subject sub:subList){%>
 			<tr>
-			<td><%=sub.getSubjectId()%></td>
+			<td><%=sub.getSubject_Id()%></td>
 			<td><%=sub.getSubject()%></td>
 			</tr>
 			<% } %>

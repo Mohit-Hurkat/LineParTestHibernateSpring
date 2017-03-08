@@ -24,10 +24,8 @@ public class AdminQuestionController extends HttpServlet {
 		HttpSession session=request.getSession(false);
 			SubjectLogic lc=new SubjectLogic();
 			try {
-				System.out.println("hello");
+
 				List<Subject> sub=lc.displayAll();
-				System.out.println("hel");
-				System.out.println(sub);
 				if(sub!=null)
 				{
 					if (request.getParameter("delete") != null) {

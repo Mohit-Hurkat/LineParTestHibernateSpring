@@ -25,19 +25,18 @@
   <% Subject sub=(Subject)session.getAttribute("sessionSubject"); %>
   You requested to insert a question for the subject: <%=sub.getSubject() %>
  <br>
-<input type="hidden" name="questionId" value="0">
- Subject ID<input type="text" name="subject" value="<%=sub.getSubjectId() %>" "fixed value" readonly >
+ Subject ID<input type="text" name="subject" value="<%=sub.getSubject_Id() %>" "fixed value" readonly >
  Question<input type="text" name="question"><br>
  Option 1 <input type="text" name="op1">
  Option 2 <input type="text" name="op2">
  Option 3 <input type="text" name="op3" >
  Option 4 <input type="text" name="op4">
  <br>
- Answer <input type="number" name="answer">
- </div>
+ Answer <input type="number" min="1" max="4" name="answer">
  <br>
  <input type="submit" value="submit" name="insert">
  </form>
+  </div>
  <form action="${pageContext.request.contextPath}/Admin/adminSignIn.jsp" method="post">
  <input type="submit" class="button-block" value="Back">
  </form>

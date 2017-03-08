@@ -34,7 +34,6 @@ public class QuestionDaoImpl implements QuestionDao {
 
 	}
 
-	private static final String GET_ANS = "SELECT ANS FROM QUESTIONS WHERE QUESTION_ID = ?";
 	private Question ques = null;
 
 	@Override
@@ -101,7 +100,6 @@ public class QuestionDaoImpl implements QuestionDao {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			System.out.println("he");
 			ques = (Question) session.get(Question.class, questionId);
 			ques.setAns(question.getAns());
 			ques.setAnswer(question.getAnswer());

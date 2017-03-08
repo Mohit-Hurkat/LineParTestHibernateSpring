@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "RESULT")
 public class Result implements Serializable {
+//	 @Id
+//	private int Result_No;
 	 @Id
-	private int Result_No;
 	private String username;
+	 @Id
 	private int subjectId;
 	private int result;
 	private Date date1;
@@ -26,6 +30,15 @@ public class Result implements Serializable {
 		this.result = result;
 		this.date1 = date1;
 	}
+
+	
+//	public int getResult_No() {
+//		return Result_No;
+//	}
+//
+//	public void setResult_No(int result_No) {
+//		Result_No = result_No;
+//	}
 
 	public String getUsername() {
 		return username;

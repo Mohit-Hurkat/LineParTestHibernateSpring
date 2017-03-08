@@ -24,13 +24,14 @@ public class SubjectController extends HttpServlet {
 		if (request.getParameter("insert") != null) {
 
 			SubjectLogic lc = new SubjectLogic();
+			int subjectId=0;
 			String subname = request.getParameter("subjectName");
 			String subdate1 = request.getParameter("subjectDate1");
 			String subdate2 = request.getParameter("subjectDate2");
-
+			Subject subject=new Subject(subjectId,subname, subdate1, subdate2);
 			try {
 
-				if (lc.insert(subname, subdate1, subdate2)) {
+				if (lc.insert(subject)) {
 
 					session.setAttribute("mess", "Successfully Inserted.");// use
 																			// this
@@ -85,7 +86,7 @@ public class SubjectController extends HttpServlet {
 
 			try {
 				Subject sub = lc.search(subid);
-				if (sub.getSubjectId() == subid) {
+				if (sub.getSubject_Id() == subid) {
 					session.setAttribute("subjectSearch", sub);// use this
 																// attribute to
 																// display data

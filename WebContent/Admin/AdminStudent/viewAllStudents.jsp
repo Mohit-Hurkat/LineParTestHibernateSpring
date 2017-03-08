@@ -35,7 +35,6 @@
 							<th>Username</th>
 							<th>Phone</th>
 							<th>Email</th>
-							<th>Password</th>
 						</tr>
 						<%
 							for (Student stu : studentList) {
@@ -45,7 +44,6 @@
 							<td><%=stu.getUsername()%></td>
 							<td><%=stu.getPhone()%></td>
 							<td><%=stu.getEmail()%></td>
-							<td><%=stu.getPassword()%></td>
 
 						</tr>
 						<%
