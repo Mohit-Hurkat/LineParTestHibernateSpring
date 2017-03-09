@@ -26,7 +26,7 @@ public class StudentHelper extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		System.out.println("studentHelper");
 		if (request.getParameter("display") != null) {
 			HttpSession session = request.getSession(false);
 			SubjectLogic lc = new SubjectLogic();
@@ -135,9 +135,9 @@ public class StudentHelper extends HttpServlet {
 			String user = request.getParameter("username");
 			String pass = request.getParameter("password");
 			Student student = new Student(user, pass, "mohit", "9987588772", "mohit.hukat@gmail.com");
+			System.out.println("login");
 			try {
 				if (lc.check(user, pass)) {
-
 					session.setAttribute("student", student);
 					student = lc.search(user);
 					session.setAttribute("sessionName", student.getName());

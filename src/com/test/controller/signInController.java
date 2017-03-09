@@ -25,6 +25,7 @@ public class signInController extends HttpServlet {
 			RequestDispatcher dispatch = request.getRequestDispatcher("./AdminController");
 			dispatch.forward(request, response);
 		} else {
+			System.out.println("user");
 			request.setAttribute("username", user);
 			request.setAttribute("password", pass);
 			request.setAttribute("login", login);
