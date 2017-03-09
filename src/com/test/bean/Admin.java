@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 @Entity(name="ADMIN")
 public class Admin implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	private String username;
 	private String password;

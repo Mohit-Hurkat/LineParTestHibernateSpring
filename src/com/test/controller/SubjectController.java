@@ -160,40 +160,31 @@ public class SubjectController extends HttpServlet {
 				response.sendRedirect("./lost.jsp");
 			}
 
-		} else if (request.getParameter("showsubject") != null) {// use this
-																	// function
-																	// in
-																	// appropriate
-																	// place.It
-																	// is not
-																	// called
-																	// directly
-																	// through
-																	// main
-																	// page.
+		} 
+//		else if (request.getParameter("showsubject") != null) {
+//			String subname = request.getParameter("suname");
+//			SubjectLogic lc = new SubjectLogic();
+//			try {
+//				List<Subject> sub = lc.showSubject(subname);
+//				if (sub != null) {
+//					request.setAttribute("subjectShow", sub);// use this
+//																// attribute to
+//																// display data
+//					RequestDispatcher dispatch = request.getRequestDispatcher("./subject.jsp");
+//					dispatch.forward(request, response);
+//				} else {
+//					session.setAttribute("message", "");
+//					session.setAttribute("message1", "");
+//					response.sendRedirect("./lost.jsp");
+//				}
+//			} catch (ClassNotFoundException | SQLException e) {
+//				session.setAttribute("message", "Server Error!!!");
+//				session.setAttribute("message1", "Please Contact The Administrator.");
+//				response.sendRedirect("./lost.jsp");
+//			}
+//		}
 
-			String suname = request.getParameter("suname");
-			SubjectLogic lc = new SubjectLogic();
-			try {
-				List<Subject> sub = lc.showSubject(suname);
-				if (sub != null) {
-					request.setAttribute("subjectShow", sub);// use this
-																// attribute to
-																// display data
-					RequestDispatcher dispatch = request.getRequestDispatcher("./subject.jsp");
-					dispatch.forward(request, response);
-				} else {
-					session.setAttribute("message", "");
-					session.setAttribute("message1", "");
-					response.sendRedirect("./lost.jsp");
-				}
-			} catch (ClassNotFoundException | SQLException e) {
-				session.setAttribute("message", "Server Error!!!");
-				session.setAttribute("message1", "Please Contact The Administrator.");
-				response.sendRedirect("./lost.jsp");
-			}
-
-		} else if (request.getParameter("subjectname") != null) {// use this
+		 else if (request.getParameter("subjectname") != null) {// use this
 																	// function
 																	// in
 																	// appropriate
