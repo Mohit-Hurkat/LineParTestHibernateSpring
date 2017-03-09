@@ -29,11 +29,11 @@ public class TestController extends HttpServlet {
 															// parameter name
 				try {
 					List<Result> result = new ArrayList<>();
-					 System.out.println("a");
+					System.out.println("a");
 					System.out.println(subjectId);
 					System.out.println(username);
 					System.out.println(result);
-					if (lc.result(username, subjectId)==0) {
+					if (lc.result(username, subjectId) == 0) {
 						System.out.println("aa");
 						if (lc.check_questions(subjectId, username)) {
 							System.out.println("aaa");

@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.jasper.tagplugins.jstl.core.Out;
-
 import com.test.bean.Question;
 import com.test.bean.Result;
 import com.test.bean.Student;
@@ -23,11 +20,10 @@ import com.test.bl.StudentLogic;
 import com.test.bl.SubjectLogic;
 import com.test.bl.TestLogic;
 
-import javafx.scene.control.Alert;
-
 public class StudentHelper extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private StudentLogic lc = new StudentLogic();
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -146,7 +142,7 @@ public class StudentHelper extends HttpServlet {
 					student = lc.search(user);
 					session.setAttribute("sessionName", student.getName());
 					session.setAttribute("sessionUsername", user);
-//					response.sendRedirect("./Student/studentPreloader.jsp");
+					// response.sendRedirect("./Student/studentPreloader.jsp");
 					response.sendRedirect("./Student/student.jsp");
 				} else {
 					session.setAttribute("message", "Invalid Credentials");

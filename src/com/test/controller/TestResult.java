@@ -1,14 +1,12 @@
 package com.test.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.rmi.CORBA.UtilDelegate;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import com.test.bean.Question;
 import com.test.bean.Result;
-import com.test.bean.Student;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 import com.test.bean.PrintResult;
 import com.test.bl.QuestionLogic;
 import com.test.bl.ResultLogic;
@@ -35,9 +31,8 @@ public class TestResult extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		String username = (String) session.getAttribute("sessionUsername");
 		ArrayList<Question> ques = (ArrayList<Question>) session.getAttribute("Questions");
-		List<PrintResult> resultList1 = new ArrayList<>();
 		try {
-			if (lc.result(username, ques.get(0).getSubject_Id())==0) {
+			if (lc.result(username, ques.get(0).getSubject_Id()) == 0) {
 				List<PrintResult> resultList = new ArrayList<>();
 				int count = 0;
 				Question questtt = null;
@@ -66,9 +61,9 @@ public class TestResult extends HttpServlet {
 				int subId = questt.getSubject_Id();
 				System.out.println(subId);
 				Calendar currenttime = Calendar.getInstance();
-			    Date sqldate = new Date((currenttime.getTime()).getTime());
-				Result result=new Result(username, subId, count * 10,sqldate);
-				System.out.println("hellol"+result);
+				Date sqldate = new Date((currenttime.getTime()).getTime());
+				Result result = new Result(username, subId, count * 10, sqldate);
+				System.out.println("hellol" + result);
 				rLogic.set(result);
 				if (session.getAttribute("dontGive") == null)
 					response.sendRedirect("./Student/printResult.jsp");

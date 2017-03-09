@@ -2,7 +2,6 @@ package com.test.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -24,11 +23,11 @@ public class SubjectController extends HttpServlet {
 		if (request.getParameter("insert") != null) {
 
 			SubjectLogic lc = new SubjectLogic();
-			int subjectId=0;
+			int subjectId = 0;
 			String subname = request.getParameter("subjectName");
 			String subdate1 = request.getParameter("subjectDate1");
 			String subdate2 = request.getParameter("subjectDate2");
-			Subject subject=new Subject(subjectId,subname, subdate1, subdate2);
+			Subject subject = new Subject(subjectId, subname, subdate1, subdate2);
 			try {
 
 				if (lc.insert(subject)) {
