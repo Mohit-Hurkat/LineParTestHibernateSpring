@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 @Entity(name="QUESTIONS")
 public class Question implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
    private int question_Id;
    private int subject_Id;
@@ -22,8 +23,11 @@ public class Question implements Serializable {
    public Question(){
    }
 
-public Question(int question_Id,int subject_Id, String question, int answer, String choice1, String choice2,
-		String choice3, String choice4,String ans,String value) {
+
+
+public Question(int question_Id, int subject_Id, String question, int answer, String choice1, String choice2,
+		String choice3, String choice4, String ans, String value) {
+	super();
 	this.question_Id = question_Id;
 	this.subject_Id = subject_Id;
 	this.question = question;
@@ -32,6 +36,7 @@ public Question(int question_Id,int subject_Id, String question, int answer, Str
 	this.choice2 = choice2;
 	this.choice3 = choice3;
 	this.choice4 = choice4;
+	this.value = value;
 	switch(answer){
 	case 1:this.ans= choice1;
 	break;
@@ -43,8 +48,9 @@ public Question(int question_Id,int subject_Id, String question, int answer, Str
 	break;
 	default: this.ans=null;
 	}
-	this.value = value;
 }
+
+
 
 public int getQuestion_Id() {
 	return question_Id;

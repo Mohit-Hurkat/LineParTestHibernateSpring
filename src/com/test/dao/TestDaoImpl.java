@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -13,12 +12,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.transform.Transformers;
 import org.hibernate.type.IntegerType;
 
 import java.io.IOException;
 import com.test.bean.Question;
 import com.test.bean.Subject;
+
 
 public class TestDaoImpl implements TestDao {
 	private Configuration cfg;
@@ -117,23 +116,20 @@ public class TestDaoImpl implements TestDao {
 		try {
 			System.out.println("m");
 			tx = session.beginTransaction();
-			Query query = session.createSQLQuery("SELECT * FROM QUESTIONS WHERE rownum <=10 AND SUBJECT_ID =:subId AND VALUE !=:value ORDER BY DBMS_RANDOM.RANDOM");
+			Query query = session.createSQLQuery("SELECT Question_Id FROM QUESTIONS WHERE rowNum <=10 AND SUBJECT_ID =:subId AND VALUE !=:value ORDER BY DBMS_RANDOM.RANDOM");
 			query.setInteger("subId", subjectId);
 			query.setString("value", username);
-			List<Question> quesList =query.list();
-			System.out.println(quesList);
-			// int id=quesList.get(0).getQuestion_Id();
-			// int id1=quesList.get(1).getQuestion_Id();
-			// System.out.println(id);
-			// System.out.println(id1);
-			Query query1 = session.createSQLQuery("UPDATE QUESTIONS SET VALUE=:value where QUESTION_ID=:questId");
-			query1.setString("value", username);
-			query1.setInteger("questId", quesList.get(0).getQuestion_Id());
-			int s = query.executeUpdate();
-			System.out.println("value of s" + s);
+			List<Integer> quesList =query.list();
+			Query query2 = session.createQuery(" FROM QUESTIONS WHERE Question_Id IN (:quesId)");
+			query2.setParameterList("quesId", quesList);
+			List<Question> quesList1 =query2.list();
+			Query query3 = session.createQuery("UPDATE QUESTIONS SET VALUE=:value where QUESTION_ID IN (:quesId)");
+			query3.setString("value", username);
+			query3.setParameterList("quesId", quesList);
+			query3.executeUpdate();
 			tx.commit();
 			System.out.println(quesList);
-			return quesList;
+			return quesList1;
 		} catch (Exception ex) {
 			tx.rollback();
 		} finally {

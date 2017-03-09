@@ -77,11 +77,12 @@ a {
 				for (Question quest : ques) {
 			%>
 			<div class="question">
+					<div class="mySlides">
 					<h3>
 						QuestionNo:
 						<%=++que%></h3>
 					<h3><%=quest.getQuestion()%></h3>
-					<ol class="mySlides">
+					<ol>
 					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
 						value="<%=quest.getChoice1()%>"><%=quest.getChoice1()%></li>
 					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
@@ -91,6 +92,7 @@ a {
 					<li><input type="radio" name="<%=quest.getQuestion_Id()%>"
 						value="<%=quest.getChoice4()%>"><%=quest.getChoice4()%></li>
 				</ol>
+			</div>
 			</div>
 			<%
 				}
